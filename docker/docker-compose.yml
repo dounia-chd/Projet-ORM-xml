@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql-emsi:
+    image: mysql:8.0
+    container_name: emsi_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: emsi_db
+      MYSQL_USER: emsi_user
+      MYSQL_PASSWORD: emsi_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - emsi_network
+
+volumes:
+  mysql_data:
+
+networks:
+  emsi_network:
+

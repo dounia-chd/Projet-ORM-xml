@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ma.emsi.entities">
+    
+    <class name="Commande" table="commande">
+        
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        
+        <!-- Type LocalDate mappé sur DATE SQL -->
+        <property name="dateCommande" column="date_commande" 
+                  type="java.time.LocalDate" not-null="true"/>
+        
+        <!-- Type BigDecimal mappé sur DECIMAL -->
+        <property name="montant" column="montant" 
+                  type="big_decimal" precision="10" scale="2" not-null="true"/>
+        
+        <!-- Relation Many-to-One avec Client -->
+        <!-- lazy="proxy" : chargement paresseux du client -->
+        <!-- not-null="true" : id_client obligatoire -->
+        <many-to-one name="client" class="Client" 
+                     column="id_client" not-null="true" lazy="proxy"/>
+        
+    </class>
+    
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ma.emsi.entities">
+    
+    <class name="Client" table="client">
+        
+        <!-- Clé primaire avec génération auto-incrémentée -->
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        
+        <!-- Propriétés simples -->
+        <property name="nom" column="nom" type="string" 
+                  length="100" not-null="true"/>
+        
+        <property name="email" column="email" type="string" 
+                  length="150" not-null="true" unique="true"/>
+        
+        <!-- Relation One-to-Many avec Commande -->
+        <!-- inverse="true" : la relation est gérée côté Commande -->
+        <!-- lazy="false" : chargement immédiat des commandes -->
+        <!-- cascade="all" : propagation des opérations (save, delete...) -->
+        <set name="commandes" inverse="true" lazy="false" cascade="all">
+            <key column="id_client"/> <!-- Colonne FK dans table commande -->
+            <one-to-many class="Commande"/>
+        </set>
+        
+    </class>
+    
+</hibernate-mapping>
